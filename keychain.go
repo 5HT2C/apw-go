@@ -160,11 +160,17 @@ func RetrieveAccount(domain, account string) (*Account, error) {
 	}
 
 	ka, err := km.Get(domain, account)
-	if err != nil {
-		return nil, err
-	}
 
 	return ka, nil
+}
+
+func RetrieveAccountPassword(domain, account string) (string, error) {
+	ka, err := RetrieveAccount(domain, account)
+	if err != nil {
+		return "", err
+	}
+
+	return ka.GetPassword()
 }
 
 func callAPW(args ...string) (*Query, error) {
